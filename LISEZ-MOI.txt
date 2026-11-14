@@ -1,0 +1,78 @@
+DeltaruneFR-PS4 0.6 - le patch FR de DELTARUNE (PC) porté sur la version PS4
+============================================================================
+
+Cet outil fabrique, sur ton PC, les fichiers PS4 du jeu en français, à partir de TES fichiers :
+  - une copie des fichiers de TON jeu PS4 (les dossiers CUSAxxxxx-app0 et CUSAxxxxx-patch0, voir plus bas),
+  - TON jeu PC avec le patch FR installé (avec les data.win.bak que l'installateur du patch a gardés).
+Il ne contient ni le jeu ni la traduction. Ce qu'il fabrique contient le jeu et le travail de l'équipe du patch FR :
+c'est pour ta console, ne le partage pas.
+
+Comment ça marche : pour chaque chapitre, le fichier PC d'origine et le fichier PS4 sont la même version du jeu,
+compilée pour deux machines. L'outil trouve ce qui les distingue (réglages, quelques valeurs dans le code, shaders,
+images des bordures d'écran) et l'applique au fichier PC en français. Il ajoute aussi le démarrage du patch FR à
+l'endroit où le jeu démarre sur console. Le résultat est le fichier PS4 en français.
+
+Il faut que le jeu PC et le jeu PS4 soient la même version (l'outil le vérifie et le dit dans le journal).
+
+0. Copier les fichiers du jeu PS4 sur le PC
+-------------------------------------------
+  1. Sur la PS4 (GoldHEN), lance DELTARUNE et laisse-le sur l'écran titre.
+  2. Par FTP, en mode binaire (FileZilla : Transfert > Type de transfert > Binaire), va dans /mnt/sandbox/pfsmnt/ et
+     copie dans un même dossier du PC (par ex. C:\DeltarunePS4) les dossiers CUSAxxxxx-app0 et, s'il existe,
+     CUSAxxxxx-patch0. Pas ceux qui finissent par -nest ou -union.
+
+1. Sur le PC
+------------
+  1. Décompresse le zip en entier (chemin court, par ex. C:\DeltaruneFR-PS4), de préférence avec 7-Zip.
+  2. Lance DeltaruneFR-PS4.exe (SmartScreen : « Informations complémentaires » puis « Exécuter quand même »).
+  3. Indique les trois dossiers et clique sur Démarrer. L'outil vérifie d'abord ses propres fichiers. Il faut environ
+     2 Go libres ; les gros chapitres font 150 Mo chacun, compte de quelques minutes à une heure selon le PC.
+  4. À la fin, lis la dernière ligne du journal (sortie\deltarune-fr-ps4-journal.txt) : « 0 point(s) à regarder »
+     veut dire que tout s'est passé comme prévu. Les lignes « !! » sont les points à regarder.
+
+2. Sur la PS4 (GoldHEN)
+-----------------------
+  Les fichiers du jeu ne sont pas modifiés : le plugin « AFR » de GoldHEN fait lire au jeu les fichiers français
+  placés dans /data/GoldHEN/AFR. Pour revenir à l'anglais, il suffit de retirer les deux lignes de plugins.ini.
+
+  1. Le plugin : il faut /data/GoldHEN/plugins/afr.prx sur la console. S'il n'y est pas, il est dans le pack de
+     plugins de GoldHEN (GoldHEN_Plugins_Repository sur GitHub, page Releases).
+  2. /data/GoldHEN/plugins.ini : ajoute les lignes du fichier sortie\plugins.ini-a-ajouter.txt, par exemple :
+         [CUSA52463]
+         /data/GoldHEN/plugins/afr.prx
+     (crée le fichier s'il n'existe pas ; l'identifiant est celui de ton jeu).
+  3. Dans les réglages de GoldHEN, active le chargement des plugins.
+  4. Par FTP en mode binaire, copie le dossier sortie\CUSAxxxxx dans /data/GoldHEN/AFR/ : tu dois obtenir
+     /data/GoldHEN/AFR/CUSAxxxxx/games/game.win, .../games/chapter1_ps4/game.win, etc.
+  5. Ferme le jeu s'il tourne, puis relance-le.
+
+À savoir
+--------
+  - Bordures d'écran : si elles ont disparu, ouvre le menu du jeu, Config, et choisis à nouveau la bordure. Le patch
+    FR a traduit le nom de ce réglage, et celui enregistré en anglais n'est plus reconnu. Cela peut se reproduire en
+    changeant de chapitre.
+  - L'option « Langue » de l'écran de choix du chapitre a été pensée pour le PC : elle peut ne rien faire sur console.
+  - La reprise des réglages d'une ancienne version du patch FR (convert_sakushi_flags) est sautée au démarrage :
+    sur console, les sauvegardes ne sont pas encore chargées à ce moment-là.
+  - Le jeu plante ou reste sur un écran noir : retire les deux lignes de plugins.ini pour retrouver le jeu d'origine.
+    Tu peux aussi n'installer qu'un chapitre : ne copie que games\chapterN_ps4.
+
+État
+----
+  Essayé sur une seule configuration : PS4 Slim, firmware 10.01, GoldHEN 2.4b18, jeu en version 1.12 (chapitres 1 à
+  5), patch FR de novembre 2026. L'écran de choix du chapitre et le chapitre 5 démarrent en français, avec les
+  bordures. Les autres chapitres sont fabriqués de la même façon mais n'ont pas été joués. Rien n'a été joué jusqu'au
+  bout.
+
+Un problème ?
+-------------
+  Ouvre un ticket sur GitHub avec le journal, une photo du message d'erreur du jeu et, si possible, le fichier
+  sortie\code-fr\ du chapitre concerné (le code du patch FR en texte). N'envoie jamais de fichiers du jeu.
+
+Crédits et licences
+-------------------
+  UndertaleModTool (UndertaleModCli, dossier utmt\) : GPLv3, https://github.com/UnderminersTeam/UndertaleModTool
+  (licence dans utmt\LICENSE.txt). Plugin AFR : jocover, SiSTR0 (GoldHEN_Plugins_Repository).
+  La traduction française est le travail de l'équipe du patch FR de DELTARUNE (deltarune-fr.com) : cet outil ne la
+  contient pas et n'est pas lié à cette équipe. DELTARUNE est un jeu de Toby Fox.
+  Port.csx et le lanceur : GPLv3, sources sur le dépôt GitHub de l'outil.
