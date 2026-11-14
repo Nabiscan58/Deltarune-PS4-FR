@@ -12,6 +12,11 @@ console, ne les partage pas.
 > démarrent en français, avec les bordures d'écran. Les autres chapitres sont fabriqués de la même façon mais n'ont
 > pas été joués, et rien n'a été joué jusqu'au bout. Les retours sont les bienvenus.
 
+**En français et à 60 FPS :** l'outil [Deltarune-FR-60FPS](https://github.com/Nabiscan58/Deltarune-FR-60FPS) ajoute
+le mod [60 FPS Overhaul](https://gamebanana.com/mods/688311) de BadArtAdventure au jeu PC déjà en français. Fais
+cette fusion sur PC, puis lance DeltaruneFR-PS4 comme d'habitude : il part du `data.win` de ton jeu PC et fabrique
+donc les fichiers PS4 en français et à 60 FPS. Essayé sur la même console (le jeu tourne, il a été peu joué).
+
 Projet de fans, sans lien avec Toby Fox, 8-4, Sony ni l'équipe du patch FR.
 
 ## Utilisation
